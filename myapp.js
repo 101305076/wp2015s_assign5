@@ -21,5 +21,28 @@ var skycons = new Skycons();
 Get value from Bootstrap dropdown menu
 */
 $('#dropdown li').on('click', function(){
-    alert($(this).text());
+    
+       var city=$(this).text();
+       $.ajax('https://query.yahooapis.com/v1/public/yql', {
+         method: 'GET',
+         data: {
+           q: 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="' + city + '")',
+           format: 'json'
+         },
+         success: function (data) {
+       var weatherInfo = data.query.results.channel;
+             var cityMatch = 'It seems ' + weatherInfo.item.condition.text.toLowerCase()+' in '+ weatherInfo.location.city + ', ' + weatherInfo.location.country
+             var noCity = 'Sorry, I found no city matching ' + city;
+           if (data.query.count === 0 || data.query.results.channel.item.title === 'City not found') {
+             responsiveVoice.speak(noCity);
+             setSubtitle(noCity);
+             return false;
+           }
+       console.log(weatherInfo);
+           $('.temperature').text(weatherInfo.astronomy.sunrise);
+       console.log(cityMatch);
+       console.log(nocity);
+         }
+       });
 });
+
