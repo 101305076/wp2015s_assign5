@@ -38,8 +38,12 @@ $('#dropdown li').on('click', function(){
              setSubtitle(noCity);
              return false;
            }
+
        console.log(weatherInfo);
            $('.temperature').text(weatherInfo.astronomy.sunrise);
+       console.log(weatherInfo);
+           $('.date').text(weatherInfo.item.condution.date);
+
        console.log(cityMatch);
        console.log(nocity);
          }
