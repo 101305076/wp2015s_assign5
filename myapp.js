@@ -43,8 +43,10 @@ $('#dropdown li').on('click', function(){
            $('.temperature').text(weatherInfo.astronomy.sunrise);
        console.log(weatherInfo);
            $('.date').text(weatherInfo.item.condition.date);
-       
-           $('.temp1').text(weatherInfo.item.forecast.[1].high);
+       console.log(weatherInfo);
+           $('.condition').text(weatherInfo.item.condition.text);
+       console.log(weatherInfo);
+           $('.temp1').text(weatherInfo.item.forecast.[1].);
 
       
        console.log(cityMatch);
