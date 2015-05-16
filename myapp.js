@@ -15,14 +15,19 @@ var skycons = new Skycons();
   skycons.play();
   
   // want to change the icon? no problem:
-  skycons.set("today", Skycons.PARTLY_CLOUDY_NIGHT);
+ // skycons.set("today", Skycons.PARTLY_CLOUDY_NIGHT);
   
 /*
 Get value from Bootstrap dropdown menu
 */
 $('#dropdown li').on('click', function(){
-    
+
+
+
        var city=$(this).text();
+       $('#city-button').text(city);
+       console.log($('#city-button').text());
+
        $.ajax('https://query.yahooapis.com/v1/public/yql', {
          method: 'GET',
          data: {
@@ -31,25 +36,78 @@ $('#dropdown li').on('click', function(){
          },
          success: function (data) {
        var weatherInfo = data.query.results.channel;
-             var cityMatch = 'It seems ' + weatherInfo.item.condition.text.toLowerCase()+' in '+ weatherInfo.location.city + ', ' + weatherInfo.location.country
+             var cityMatch = 'It seems ' + weatherInfo.item.condition.text.toLowerCase()+' in '+ weatherInfo.location.city + ', ' + weatherInfo.location.country;
              var noCity = 'Sorry, I found no city matching ' + city;
            if (data.query.count === 0 || data.query.results.channel.item.title === 'City not found') {
              responsiveVoice.speak(noCity);
              setSubtitle(noCity);
              return false;
            }
+        function transfer(a) {
+           return (a-32)*5/9;
+        }
 
-       console.log(weatherInfo);
-           $('.temperature').text(weatherInfo.astronomy.sunrise);
+       var num=3;
+       var pos=1;
+
+       function formatFloat(num, pos){
+         var size = Math.pow(10, pos);
+         return Math.round( num * size) / size;
+       }
+      
        console.log(weatherInfo);
            $('.date').text(weatherInfo.item.condition.date);
-       console.log(weatherInfo);
-           $('.condition').text(weatherInfo.item.condition.text);
-       console.log(weatherInfo);
-           $('.temp1').text(weatherInfo.item.forecast.[1].);
+     
+           $('.weather').text(weatherInfo.item.condition.text);
+       
+           $('.temperature').text(formatFloat(transfer(weatherInfo.item.condition.temp),0));
+       
 
+       
+           $('.date').text(weatherInfo.item.forecast[0].date);
+           $('.date1').text(weatherInfo.item.forecast[1].date);
+           $('.date2').text(weatherInfo.item.forecast[2].date);
+           $('.date3').text(weatherInfo.item.forecast[3].date);
+       
+           $('.temp1').text( formatFloat(transfer(weatherInfo.item.forecast[1].low),0) + '~' + formatFloat(transfer(weatherInfo.item.forecast[1].high) ,0) +  '℃');
+           $('.temp2').text( formatFloat(transfer(weatherInfo.item.forecast[2].low),0) + '~' + formatFloat(transfer(weatherInfo.item.forecast[2].high) ,0) +  '℃');
+           $('.temp3').text( formatFloat(transfer(weatherInfo.item.forecast[3].low),0) + '~' + formatFloat(transfer(weatherInfo.item.forecast[3].high) ,0) +  '℃');
+;
+       
+       
       
-       console.log(cityMatch);
+       var input = 'Rain';
+       function todayskycons(input){
+    
+      
+        if (input = 'Clear') { skycons.set("today", Skycons.CLEAR_DAY);}
+        if (input = 'Mostly Clear') { skycons.set("today", Skycons.CLEAR_DAY);}
+        if (input = 'Mostly Sunny') { skycons.set("today", Skycons.CLEAR_DAY);}
+        if (input = 'Partly Cloudy') {skycons.set("today", Skycons.PARTLY_CLOUDY_DAY);}
+        if (input = 'Mostly Cloudy') {skycons.set("today", Skycons.CLOUDY);}
+        if (input = 'Rain') {skycons.set("today", Skycons.RAIN);}
+        if (input = 'Thunderstom') {skycons.set("today", Skycons.RAIN);}
+        if (input = 'AM Showers') {skycons.set("today", Skycons.RAIN);}
+        if (input = 'PM Showers')  {skycons.set("today", Skycons.RAIN);}
+        if (input = 'Showers')  {skycons.set("today", Skycons.RAIN);}
+        if (input = 'PM Thunderstorms') {skycons.set("today", Skycons.RAIN);}
+        if (input = 'Wind')   {skycons.set("today", Skycons.WIND);}         
+        console.log(input);
+       }
+      
+      todayskycons(weatherInfo.item.condition.text);
+
+      console.log(weatherInfo.item.condition.text);
+
+
+
+
+    //   skycons.set("today", skyconsimg(weatherInfo.item.forecast[0].text));
+    //   skycons.set("day1", skyconsimg(weatherInfo.item.forecast[1].text));
+    //   skycons.set("day2", skyconsimg(weatherInfo.item.forecast[2].text));
+    //   skycons.set("day3", skyconsimg(weatherInfo.item.forecast[3].text));
+
+      // console.log(cityMatch);
        //console.log(nocity);
          }
        });
