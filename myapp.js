@@ -22,7 +22,9 @@ Get value from Bootstrap dropdown menu
 */
 $('#dropdown li').on('click', function(){
 
-
+       
+       $('#city-button').text('Select Your Location');
+       console.log($('#city-button').text());
 
        var city=$(this).text();
        $('#city-button').text(city);
@@ -47,8 +49,8 @@ $('#dropdown li').on('click', function(){
            return (a-32)*5/9;
         }
 
-       var num=3;
-       var pos=1;
+       var num = 3;
+       var pos = 1;
 
        function formatFloat(num, pos){
          var size = Math.pow(10, pos);
@@ -77,8 +79,6 @@ $('#dropdown li').on('click', function(){
        
       
        var input = 'Rain';
-       
-      
 
       function dayskycons(day,input){
         console.log(input);
