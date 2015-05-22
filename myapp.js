@@ -99,6 +99,29 @@ $('#dropdown li').on('click', function(){
 
       console.log(weatherInfo.item.condition.text);
 
+      function day1skycons(input1){
+    
+      
+        if (input = 'Clear') { skycons.set("day1", Skycons.CLEAR_DAY);}
+        if (input = 'Mostly Clear') { skycons.set("day1", Skycons.CLEAR_DAY);}
+        if (input = 'Mostly Sunny') { skycons.set("day1", Skycons.CLEAR_DAY);}
+        if (input = 'Partly Cloudy') {skycons.set("day1", Skycons.PARTLY_CLOUDY_DAY);}
+        if (input = 'Mostly Cloudy') {skycons.set("day1", Skycons.CLOUDY);}
+        if (input = 'Rain') {skycons.set("day1", Skycons.RAIN);}
+        if (input = 'Thunderstom') {skycons.set("day1", Skycons.RAIN);}
+        if (input = 'AM Showers') {skycons.set("day1", Skycons.RAIN);}
+        if (input = 'PM Showers')  {skycons.set("day1", Skycons.RAIN);}
+        if (input = 'Showers')  {skycons.set("day1", Skycons.RAIN);}
+        if (input = 'PM Thunderstorms') {skycons.set("day1", Skycons.RAIN);}
+        if (input = 'Wind')   {skycons.set("day1", Skycons.WIND);}         
+        console.log(input1);
+       }
+      
+      todayskycons(weatherInfo.item.forecast[1].text);
+
+      console.log(weatherInfo.item.forecast[1].text);
+
+
 
 
 
